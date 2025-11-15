@@ -1,5 +1,5 @@
 export const responseStatus = {
-    FAIL: 'fail',
     SUCCESS: 'success',
+    FAIL: 'fail',
     ERROR: 'error',
 }

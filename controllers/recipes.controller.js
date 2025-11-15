@@ -22,7 +22,12 @@ const createRecipe = asyncWrapper(async (req, res) => {
 
     const newRecipe = new Recipe(req.body)
     const savedRecipe = await newRecipe.save()
-    res.status(201).json({ status: responseStatus.SUCCESS, data: { recipe: savedRecipe } })
+    console.log(savedRecipe);
+    const recipe = {
+        ...(savedRecipe._doc),
+        image: req.file.filename
+    }
+    res.status(201).json({ status: responseStatus.SUCCESS, data: { recipe } })
 })
 
 const updateRecipe = asyncWrapper(async (req, res) => {

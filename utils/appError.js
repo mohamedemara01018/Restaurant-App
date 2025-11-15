@@ -1,8 +1,7 @@
-export const AppError = (message, statusCode, statusResponse) => {
-    const newError = new Error();
-    newError.message = message
-    newError.statusCode = statusCode
-    newError.statusResponse = statusResponse
-    return newError
+export const AppError = (message, statusCode, responseText) => {
+    let error = new Error();
+    error.message = message;
+    error.statusCode = statusCode;
+    error.responseText = responseText;
+    return error
 }
-
