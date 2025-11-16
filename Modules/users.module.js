@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { roles } from "../utils/roles.js";
 
 
 const userSchema = new mongoose.Schema({
@@ -21,7 +22,12 @@ const userSchema = new mongoose.Schema({
     },
     token: {
         type: String
-    }
+    },
+    role: {
+        type: String,
+        enum: [roles.ADMIN, roles.USER],
+        default: roles.USER
+    },
 })
 
 export const userModel = mongoose.model('users', userSchema)

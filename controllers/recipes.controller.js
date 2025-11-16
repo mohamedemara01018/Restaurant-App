@@ -33,7 +33,7 @@ const createRecipe = asyncWrapper(async (req, res) => {
 const updateRecipe = asyncWrapper(async (req, res) => {
     const updatedRecipe = await Recipe.findByIdAndUpdate(
         req.params.id,
-        req.body,
+        { ...req.body, image: req.file.filename },
         { new: true, runValidators: true }
     )
     if (!updatedRecipe)

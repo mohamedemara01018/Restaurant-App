@@ -6,6 +6,7 @@ import express from 'express'
 import cors from 'cors'
 import recipeRoute from './Routes/recipe.route.js'
 import userRoute from './Routes/user.route.js'
+import orderItemsRoute from './Routes/orderItme.route.js'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 // import serverless from 'serverless-http'
@@ -27,6 +28,7 @@ app.use('/uploads', express.static('uploads'))
 
 app.use('/recipes', recipeRoute)
 app.use('/users', userRoute)
+app.use('/order-items', orderItemsRoute)
 
 app.get("/", (req, res) => {
     res.send("hello from local server!");

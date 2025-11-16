@@ -1,6 +1,9 @@
 import express from 'express';
 import multer from 'multer';
-import { createRecipe, deleteRecipe, getAllRecipes, getRecipeById } from '../controllers/recipes.controller.js';
+import { createRecipe, deleteRecipe, getAllRecipes, getRecipeById, updateRecipe } from '../controllers/recipes.controller.js';
+import { verifyUser } from '../Middlewares/verifyUser.middleware.js';
+import { allowTo } from '../Middlewares/allowTo.middleware.js';
+import { roles } from '../utils/roles.js';
 
 const route = express.Router();
 
@@ -12,10 +15,10 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, callback) => {
         const ext = file.mimetype.split('/')[1];
-        const fileName = `user-${Date.now()}.${ext}`;
+        const fileName = `recipe-${Date.now()}.${ext}`;
         callback(null, fileName);
     }
-}) 
+})
 
 const upload = multer({
     storage: storage,
@@ -31,13 +34,14 @@ const upload = multer({
 })
 
 route.route('/')
-    .get(getAllRecipes)
+    .get(verifyUser, allowTo([roles.USER, roles.ADMIN]), getAllRecipes)
     .post(upload.single('image'), createRecipe)
 
 
 route.route('/:id')
     .get(getRecipeById)
     .delete(deleteRecipe)
+    .put(upload.single('image'), updateRecipe)
 
 
 
